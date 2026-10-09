@@ -3830,104 +3830,29 @@ window.addEventListener(
    12. MUSIC ENGINE
 ========================================================= */
 
-async function playMusic() {
+ function nextMessage() {
+            // Putar musik saat klik pertama
+            if (!musicStarted) {
+                const music = document.getElementById('bgMusic');
+                music.play().catch(() => console.log("Audio play blocked"));
+                musicStarted = true;
+            }
 
-    try {
+            index = (index + 1) % messages.length;
 
-        music.volume =
-            .42;
+            const card = document.querySelector('.card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(10px)';
 
-        await music.play();
+            setTimeout(() => {
+                document.getElementById('subtitle').innerText = messages[index].subtitle;
+                document.getElementById('title').innerText = messages[index].title;
+                document.getElementById('message').innerText = messages[index].message;
 
-        musicPlaying =
-            true;
-
-        updateMusicUI();
-
-    } catch (error) {
-
-        musicPlaying =
-            false;
-
-        updateMusicUI();
-
-    }
-
-}
-
-
-function pauseMusic() {
-
-    music.pause();
-
-    musicPlaying =
-        false;
-
-    updateMusicUI();
-
-}
-
-
-function toggleMusic() {
-
-    if (musicPlaying) {
-
-        pauseMusic();
-
-    } else {
-
-        playMusic();
-
-    }
-
-}
-
-
-window.toggleMusic =
-    toggleMusic;
-
-
-function updateMusicUI() {
-
-    if (musicPlaying) {
-
-        musicPlayer
-            .classList
-            .add("playing");
-
-        musicIcon.textContent =
-            "Ⅱ";
-
-        musicStatus.textContent =
-            "MUSIC PLAYING";
-
-        heroMusicLabel.textContent =
-            "Sound off";
-
-    } else {
-
-        musicPlayer
-            .classList
-            .remove("playing");
-
-        musicIcon.textContent =
-            "▶";
-
-        musicStatus.textContent =
-            "MUSIC OFF";
-
-        heroMusicLabel.textContent =
-            "Sound on";
-
-    }
-
-}
-
-
-musicToggle.addEventListener(
-    "click",
-    toggleMusic
-);
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 400);
+        }
 
 
 /* =========================================================
